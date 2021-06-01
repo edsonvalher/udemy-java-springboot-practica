@@ -1,5 +1,6 @@
 package com.udemy.backendninjaprc.controller;
 
+import com.udemy.backendninjaprc.constant.ViewConstant;
 import com.udemy.backendninjaprc.model.UserCredential;
 
 import org.apache.commons.logging.Log;
@@ -28,7 +29,7 @@ public class LoginController {
             @RequestParam(name = "logout", required = false) String logout) {
 
         LOG.info("METHOD: showLoginForm() -- PARAMS: error=" + error + " logout=" + logout);
-        ModelAndView mav = new ModelAndView("login");
+        ModelAndView mav = new ModelAndView(ViewConstant.LOGIN);
         mav.addObject("error", error);
         mav.addObject("logout", logout);
         mav.addObject("userCredentials", new UserCredential());
@@ -43,8 +44,8 @@ public class LoginController {
         LOG.info("METHOD: logincheck() -- PARAMS: " + userCredential.toString());
         ModelAndView mav = new ModelAndView("contacts");
         if (userCredential.getUsername().equals(("user")) && userCredential.getPassword().equals(("user"))) {
-            mav = new ModelAndView("contacts");
             LOG.info("Returning to contacts view");
+            mav = new ModelAndView(ViewConstant.CONTACTS_REDIRECT);
         } else {
 
             mav = new ModelAndView("redirect:login?error");
