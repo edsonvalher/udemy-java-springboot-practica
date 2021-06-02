@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,6 +33,12 @@ public class ContactController {
         return mav;
     }
 
+    // @PreAuthorize("hasRole('ROLE_ADMIN')") //* se puede restringir el acceso por
+    // role como este no existe no permite y da un error 403
+    // @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')") //* esta
+    // anotacion es permitida
+
+    @PreAuthorize("permitAll()") // * y tambien se puede colcoar a nivel de clase o metodo de servicio
     @GetMapping("/contactform")
     public ModelAndView redirectContactForm(@RequestParam(name = "id", required = false) int id) {
         LOG.info("METHOD: redirectContactForm() -- PARAMS: " + id);
